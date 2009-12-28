@@ -22,7 +22,8 @@
 #include "clickdown_raw.h"
 #include "clickup_raw.h"
 
-#define PEN_DOWN (~IPC->buttons & (1 << 6))
+//#define PEN_DOWN (~IPC->buttons & (1 << 6))
+#define PEN_DOWN (keysHeld() & KEY_TOUCH)
 
 #define KB_NORMAL 0
 #define KB_CAPS   1
@@ -138,7 +139,7 @@ char processKeyboard(char* str, unsigned int max, unsigned int echo)
 	//get the map
 	uint16 * map = (uint16 *) SCREEN_BASE_BLOCK(5)+128; 
 
-	touchXY=touchReadXY();
+	touchRead(&touchXY);
 
 	if(PEN_DOWN && !g_MouseDown)
 	{
@@ -164,10 +165,13 @@ char processKeyboard(char* str, unsigned int max, unsigned int echo)
 		j = touchXY.py-32;
 		if (j < 0)
 			j = 0;
-		
+//devkitport		
+		z1 = touchXY.z1;
+		z2 = touchXY.z2;
+/*		
 		z1 = IPC->touchZ1;
 		z2 = IPC->touchZ2;
-
+*/
 		// This is the old method I used to check for pen jumps
 		//if(ABS(i-g_dx)<MOVE_MAX && ABS(j-g_dy)<MOVE_MAX)
 
@@ -224,7 +228,7 @@ char processKeyboard(char* str, unsigned int max, unsigned int echo)
 			else
 				c = keyboard_Hit_Shift[tilex+(tiley*32)];
 
-			playGenericSound(clickup_raw, clickup_raw_size);
+//			playGenericSound(clickup_raw, clickup_raw_size);
 			setTile(map, lasttilex, lasttiley, 0);
 
 			lastkey = 0; lasttilex = 0; lasttiley = 0;

@@ -8,7 +8,7 @@
 #include "gui.h"
 
 WindowData WND_CUSTOMKEYS = {
-	0, 2, 31, 21, "Setup Custom Keys"
+	0, 2, 31, 21, (char*)"Setup Custom Keys"
 };
 const GUIData LBL_CUSTOM1 = {
 	2, 17, 29, 17, "Use Y,X,A for mouse buttons."};
@@ -20,7 +20,7 @@ const GUIData LBL_CUSTOM3 = {
 
 
 WindowData WND_DESKTOP = {
-	2, 0, 28, 23, "Virtual Desktop"
+	2, 0, 28, 23, (char*)"Virtual Desktop"
 };
 const IconButtonData BTN_TOPLEFT = {
 	4, 4, 6, 6, "", ICON_LEFT };
@@ -54,7 +54,7 @@ const IconButtonData BTN_DESKTOPOK = {
 	23, 19, 25, 21, "", BUTTON_OK };
 
 const WindowData WND_GAMEPAD = {
-	2, 2, 29, 19, "GamePad Mode"
+	2, 2, 29, 19, (char*)"GamePad Mode"
 };
 const GUIData LBL_GAMEPAD1 = {
 	4, 6, 27, 6, "This mode will use the" };
@@ -77,7 +77,7 @@ const IconButtonData BTN_GAMEPADOK = {
 
 
 const WindowData WND_CONNMAIN = {
-	4, 4, 27, 18, "  Win2DS - Connected"
+	4, 4, 27, 18, (char*)"  Win2DS - Connected"
 };
 const GUIData SEL_DESKTOP = {
 	6, 8, 25, 8, "Virtual Desktop" };
@@ -92,7 +92,7 @@ const GUIData SEL_RECONNECT = {
 
 
 const WindowData WND_PASSSTATUS = {
-	5, 6, 26, 16, "Connection Status"
+	5, 6, 26, 16, (char*)"Connection Status"
 };
 const GUIData LBL_PASSSTATUS = {
 	8, 9, 24, 9, "Waiting..." };
@@ -101,14 +101,14 @@ const IconButtonData BTN_PASSCANCEL = {
 
 
 const WindowData WND_PASSWORD = {
-	6, 7, 25, 13, "Enter Password"
+	6, 7, 25, 13, (char*)"Enter Password"
 };
 const GUIData LBL_PASSWORD = {
 	7, 11, 24, 11, ""};
 
 
 const WindowData WND_CONNSETTINGS = {
-	6, 0, 26, 23, "Connection Settings"
+	6, 0, 26, 23, (char*)"Connection Settings"
 };
 const GUIData GRP_SETIP = {
 	8, 3, 24, 5, "DS IP" };
@@ -130,14 +130,14 @@ const GUIData BTN_CONNCHANGE = {
 
 
 const WindowData WND_SELAP = {
-	4,0,26,23,"Select your AP"
+	4,0,26,23,(char*)"Select your AP"
 };
 const GUIData LBL_NUMAP = {
 	6, 3, 24, 3, "APs found: 0" };
 
 
 const WindowData WND_SETIP = {
-	5, 1, 25, 22,"Enter IP"
+	5, 1, 25, 22,(char*)"Enter IP"
 };
 const IconButtonData BTN_SETIPCANCEL = {
 	7, 18, 9, 20, "", BUTTON_CANCEL };
@@ -146,7 +146,7 @@ const IconButtonData BTN_SETIPOK = {
 
 
 const WindowData WND_SEARCHAP = {
-	4, 4, 28, 15, "Looking for your AP"};
+	4, 4, 28, 15, (char*)"Looking for your AP"};
 const GUIData LBL_SEARCHAP1 = {
 	6, 8, 25, 8, "Searching..."};
 const IconButtonData BTN_SEARCHCANCEL = {
@@ -156,7 +156,7 @@ const GUIData BTN_SEARCHMANUAL = {
 
 
 const WindowData WND_CONNWAIT = {
-	1, 7, 30, 13, "Connecting"
+	1, 7, 30, 13, (char*)"Connecting"
 };
 const GUIData LBL_CONNWAIT = {
 	3, 11, 11, 11, "Status: " };
@@ -187,7 +187,7 @@ const GUIData LBL_CONN3 = {
 
 
 const WindowData WND_MAINMENU = {
-	5, 6, 26, 16, " DS2Win Fusion 0.82"
+	5, 6, 26, 18, (char*)"DS2Win Fusion 0.82a"
 };
 const GUIData SEL_MAIN1 = {
 	6, 10, 25, 10, "Connect using WFC"
@@ -195,17 +195,20 @@ const GUIData SEL_MAIN1 = {
 const GUIData SEL_MAIN2 = {
 	6, 12, 25, 12, "Connect Manually"
 };
+const GUIData SEL_MAIN4 = {
+	6, 14, 25, 14, "AutoPad Connect"
+};
 const GUIData SEL_MAIN3 = {
-	6, 14, 25, 14, "About"
+	6, 16, 25, 16, "About"
 };
 
 
 
 const WindowData WND_ABOUT = {
-	1, 7, 30, 16, "About DS2Win"
+	1, 7, 30, 17, (char*)"About DS2Win"
 };
 const GUIData LBL_ABOUT1 = {
-	3, 11, 28, 11, "DS2Win Fusion v0.82"
+	3, 11, 28, 11, "DS2Win Fusion v0.82a"
 };
 const GUIData LBL_ABOUT2 = {
 	3, 13, 28, 13, "Base Code: Bill Blaiklock"
@@ -213,3 +216,7 @@ const GUIData LBL_ABOUT2 = {
 const GUIData LBL_ABOUT3 = {
 	3, 14, 28, 14, "Enhancements: Aaron Graham"
 };
+const GUIData LBL_ABOUT4 = {
+	3, 15, 28, 15, "              Suloku"
+};
+

@@ -28,7 +28,7 @@
 #define	CTL	0x96 // Ctrl
 #define SPC	0x20 // Space
 #define ALT	0x98 // Alt
-#define NDS	0x99 // DS
+#define NDS_	0x99 // DS
 #define SCN	0x9A // Screen
 
 #define CRU	0x9B // Cursor up
