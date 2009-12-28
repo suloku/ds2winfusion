@@ -11,14 +11,13 @@ to provide new features, higher speed and service quality.
 
 Note: This release will need to be DLDI patched before using (unless you have a R4DS like me and its done automatically)
 
-== Changelog ==
+=== Changelog ===
 
 0.82 "final version"
-* server movie name and frameskip are now shown while playing movies in player.
-* client custom keys are saved to memory card.
-* client recompiled with devkitpro r23.
-
-To compile the server under Delphi 7, you'll need to get Indy 10 (free download)
+  * server - movie name and frameskip are now shown while playing movies in player.
+  * client - custom keys are saved to memory card.
+  * client - recompiled with devkitpro r23.
+  * To compile the server under Delphi 7, you'll need to get Indy 10 (free download)
 
 If you have trouble getting this to work PLEASE read the readme.txt file included very carefully and follow the instructions.
 
