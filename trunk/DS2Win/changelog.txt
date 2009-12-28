@@ -1,0 +1,11 @@
+0.82a
+- Compiled with latest devkitarm r27, libnds 1.4.0 and dswifi 0.3.11.
+- Solved an anoying bug where you had to go back and try again every time to connect.
+- Added AutoPad Connect mode: goes straight to gamepad mode. For this to work the pc side application needs to have NO password.
+- Quick connect version: at run it will go straight to "AutoPad Connect" mode.
+- Changed ini file path from root to "data/DS2Win.ini".
+
+
+Source changes notes:
+-Converted to arm9 only.
+-Use Makefile_noquick for normal version and Makefile_quick for quick version.

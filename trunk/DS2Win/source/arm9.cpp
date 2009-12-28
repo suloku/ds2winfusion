@@ -46,6 +46,8 @@ but please give credit where credit is due.
 
 #define MOUSEDELAY		2	//Frames to delay between sending mouse coordinates.
 
+int firstrun = 1;
+
 Wifi_AccessPoint global_connectAP;
 CGUI *sGUI, *mGUI;
 unsigned char global_wepkeys[4][32];
@@ -166,106 +168,108 @@ void swapBuffers (u16* buf1, u16* buf2, u16 size) {
 		buf2[i] = tmp;
 	}
 }
+//devkitport
 
 void waitVbl() {
 	scanKeys();
-	touchXY=touchReadXY();
-	
+	touchRead(&touchXY);
+/*devkitport	
 	static s8 lid_state = -1; //start the lid_state at null
 	if (IPC->buttons & IPC_LID_CLOSED) {
 		if (lid_state != 1) {
 			lid_state = 1; //change state, disable power
-			powerOFF(POWER_ALL_2D);
+			powerOff(POWER_ALL_2D);
 		}
 	} else {
 		if (lid_state != 0) {
 			lid_state = 0; //change state and enable power
-			powerON(POWER_ALL_2D);
+			powerOn(POWER_ALL_2D);
 		}
 	}
+*/
 }
 
 char *printKey (unsigned char key) {
 	char tmp[6];
 	switch (key) {
 		case F_1:
-			return "F1"; break;
+			return (char*)"F1"; break;
 		case F_2:
-			return "F2"; break;
+			return (char*)"F2"; break;
 		case F_3:
-			return "F3"; break;
+			return (char*)"F3"; break;
 		case F_4:
-			return "F4"; break;
+			return (char*)"F4"; break;
 		case F_5:
-			return "F5"; break;
+			return (char*)"F5"; break;
 		case F_6:
-			return "F6"; break;
+			return (char*)"F6"; break;
 		case F_7:
-			return "F7"; break;
+			return (char*)"F7"; break;
 		case F_8:
-			return "F8"; break;
+			return (char*)"F8"; break;
 		case F_9:
-			return "F9"; break;
+			return (char*)"F9"; break;
 		case F10:
-			return "F10"; break;
+			return (char*)"F10"; break;
 		case F11:
-			return "F11"; break;
+			return (char*)"F11"; break;
 		case F12:
-			return "F12"; break;
+			return (char*)"F12"; break;
 		case EXT:
-			return "EXIT"; break;
+			return (char*)"EXIT"; break;
 		case HOM:
-			return "HOME"; break;
+			return (char*)"HOME"; break;
 		case PGU:
-			return "PAGEUP"; break;
+			return (char*)"PAGEUP"; break;
 		case PGD:
-			return "PAGEDOWN"; break;
+			return (char*)"PAGEDOWN"; break;
 		case END:
-			return "END"; break;
+			return (char*)"END"; break;
 		case TAB:
-			return "TAB"; break;
+			return (char*)"TAB"; break;
 		case ESC:
-			return "ESCAPE"; break;
+			return (char*)"ESCAPE"; break;
 		case BSP:
-			return "BCKSPACE"; break;
+			return (char*)"BCKSPACE"; break;
 		case CAP:
-			return "CAPSLOCK"; break;
+			return (char*)"CAPSLOCK"; break;
 		case RET:
-			return "ENTER"; break;
+			return (char*)"ENTER"; break;
 		case CTL:
-			return "CONTROL"; break;
+			return (char*)"CONTROL"; break;
 		case ALT:
-			return "ALT"; break;
-		case NDS:
-			return "WIN"; break;
+			return (char*)"ALT"; break;
+		case NDS_:
+			return (char*)"WIN"; break;
 		case CRU:
-			return "UP"; break;
+			return (char*)"UP"; break;
 		case CRD:
-			return "DOWN"; break;
+			return (char*)"DOWN"; break;
 		case CRL:
-			return "LEFT"; break;
+			return (char*)"LEFT"; break;
 		case CRR:
-			return "RIGHT"; break;
+			return (char*)"RIGHT"; break;
 		case INS:
-			return "INSERT"; break;
+			return (char*)"INSERT"; break;
 		case DEL:
-			return "DEL"; break;
+			return (char*)"DEL"; break;
 		case SHF:
-			return "SHIFT"; break;
+			return (char*)"SHIFT"; break;
 		case SCN:
-			return "SCREEN"; break;
+			return (char*)"SCREEN"; break;
 		case SPC:
-			return "SPACE"; break;
+			return (char*)"SPACE"; break;
 		case MLC:
-			return "L-MOUSE"; break;
+			return (char*)"L-MOUSE"; break;
 		case MMC:
-			return "M-MOUSE"; break;
+			return (char*)"M-MOUSE"; break;
 		case MRC:
-			return "R-MOUSE"; break;
+			return (char*)"R-MOUSE"; break;
 		case ZOM:
-			return "SET ZOOM"; break;
+			return (char*)"SET ZOOM"; break;
 		case SWP:
-			return "SCRNSWAP"; break;
+			return (char*)"SCRNSWAP"; break;
 		default:
 			sprintf (tmp, "%c", key);
 			return tmp;
@@ -290,7 +294,7 @@ void gamePadMode() {
 	infoWind->addLabel(&LBL_GAMEPAD5);
 	infoWind->addLabel(&LBL_GAMEPAD6);
 	infoWind->addLabel(&LBL_GAMEPAD7);
-
+if(!firstrun){
 	do {
 		swiWaitForVBlank();
 		updateConnection();
@@ -302,10 +306,14 @@ void gamePadMode() {
 			return;
 		}
 	} while(infoWind->getState()!=WND_OK && OKButton->getState()!=BTN_ACTIVATED);
+}else{
+	firstrun=0;
+}	
 
 	mGUI->destroyWindow(infoWind);
+
 	
-	powerOFF(POWER_ALL_2D);
+	powerOff(POWER_ALL_2D);
 
 	do {
 		swiWaitForVBlank();
@@ -355,7 +363,7 @@ void gamePadMode() {
 
 	} while ( !((keysHeld()&KEY_START) && (keysHeld()&KEY_SELECT)) );
 	
-	powerON(POWER_ALL_2D);
+	powerOn(POWER_ALL_2D);
 
 	return;
 }
@@ -473,10 +481,10 @@ void bindMenu(unsigned char* keys) {
 //		}
 	} while (!(keysDown()&KEY_START));
 
-	FILE* fFile = fopen ("DS2Win.ini", "wb");		
+	FILE* fFile = fopen ("data/DS2Win.ini", "wb");		
 	
 	if (fFile) {
-	  sprintf(ip,"%X",destip);
+	  sprintf(ip,"%lX",destip);
 	  fputs(ip, fFile);
 	  for (i = 0; i < 10; i++) 
 	    fputc(keys[i],fFile);			    
@@ -503,7 +511,7 @@ void virtualDesktopMode() {
 	screenSmall.setComplete (false);
 	screenPart.setComplete (false);
 	kLast = keysHeld();
-	tLast = touchReadXY();
+	touchRead(&tLast);
 
 	do {
 		swiWaitForVBlank();
@@ -515,7 +523,9 @@ void virtualDesktopMode() {
 		}
 
 		setZoom(zoom);
-        if (!(IPC->buttons & IPC_LID_CLOSED) && !showMenu) {
+        
+//devkitport	if (!(IPC->buttons & IPC_LID_CLOSED) && !showMenu) {
+		if (!(keysHeld() & KEY_LID) && !showMenu) {
 			if (screenSwap) {
 			    if (dualZoom) // update at same speed as zoomed screen
 				  updateScreenShot(&screenSmall, screenSpeedData[screenPartSpeed], SCREENPARTVRAM, dualZoom);
@@ -574,11 +584,11 @@ void virtualDesktopMode() {
 						if (!(kHeld&dsKeys[zoomBtn])) { // if changing zoomed screen position disable clicking
 							if (tDown) {
 								sendCommand (MOUSECLICKDOWN);
-								playGenericSound(clickdown_raw, clickdown_raw_size);
+								//playGenericSound(clickdown_raw, clickdown_raw_size);
 							}
 							if (tUp) {
 								sendCommand (MOUSECLICKUP);
-								playGenericSound(clickup_raw, clickup_raw_size);
+								//playGenericSound(clickup_raw, clickup_raw_size);
 							}
 						}
 					}
@@ -806,12 +816,13 @@ void virtualDesktopMode() {
 		mGUI->destroyWindow(mainWnd);
 }
 
-bool validatePassword() {
+bool validatePassword(char* password) {
 	u16 passAccepted;
 	CWindow *connWnd;
 	CLabel *connLbl;
 	CIconButton *cancelButton;
 	bool connected = false;
+	int result = 0;
 	
 	connWnd = mGUI->createWindow(&WND_PASSSTATUS);
 	connLbl = connWnd->addLabel(&LBL_PASSSTATUS);
@@ -820,13 +831,20 @@ bool validatePassword() {
 	do {
 		swiWaitForVBlank();
 		mGUI->processInput();
-
+		
 		passAccepted = isPassAccepted();
 		if (passAccepted == 1) {
-			connLbl->setText("Password accepted.");
+			result = 1;
+			connLbl->setText((char*)"Password accepted.");
 			connected = true;
-		} else if (passAccepted == 0)
-			connLbl->setText("Password rejected.");
+		} else if (passAccepted == 0){
+			result = 1;
+			connLbl->setText((char*)"Password rejected.");
+			if(firstrun)
+				firstrun=0;
+		}else if (!result){
+			sendPassword (password, destip);
+			}
 
 	} while (!connected && connWnd->getState()!=WND_CANCEL && cancelButton->getState()!=BTN_ACTIVATED);
 	
@@ -854,6 +872,7 @@ void sendTouchUDP() {
 		passWnd = sGUI->createWindow(&WND_PASSWORD);
 		passLbl = passWnd->addLabel(&LBL_PASSWORD);
 		
+	if(!firstrun){
 		showKeyboard(true);
 
 		while (((keybd = processKeyboard(&str[0], 15, 0) != RET) && !(keysDown()&KEY_A)) && passWnd->getState()!=WND_OK) {
@@ -866,18 +885,19 @@ void sendTouchUDP() {
 				return;
 			}
 		}
+	}
 		
-		sendPassword (str, destip);
 		sGUI->destroyWindow(passWnd);
 		showKeyboard(false);
 		
-		connected = validatePassword();
+		sendPassword (str, destip);
+		connected = validatePassword(str);
 		
 		if (connected) {
-			FILE* fFile = fopen ("DS2Win.ini", "wb");		
+			FILE* fFile = fopen ("data/DS2Win.ini", "wb");		
 			
 			if (fFile) {
-			  sprintf(ip,"%X",destip);
+			  sprintf(ip,"%lX",destip);
 			  fputs(ip, fFile);
 			  for (i = 0; i < 10; i++) 
 			    fputc(customKeys[i],fFile);			    
@@ -886,6 +906,8 @@ void sendTouchUDP() {
 		}
 	} while (!connected);
 
+	if(firstrun)
+		gamePadMode();
 	
 	do {
 		mainWnd = mGUI->createWindow(&WND_CONNMAIN);
@@ -918,7 +940,7 @@ void sendTouchUDP() {
 			case 2: bindMenu (customKeys); break;
 			case 3: gamePadMode(); break;
 			case 4: connected = false; break;
-			case 5: {sendPassword (str, destip); validatePassword();} 
+			case 5: {sendPassword (str, destip); validatePassword(str);} 
 		}
 
 	} while (connected);
@@ -1167,11 +1189,11 @@ bool connectionMenu() {
 		mGUI->destroyWindow(connWindow);
 
 		switch(sel) {
-			case 0: enterIP (&global_ipaddr, "DS IP"); break;
-			case 1: enterIP (&global_gateway, "Gateway Address"); break;
-			case 2: enterIP (&global_dns1, "DNS Address 1"); break;
-			case 3: enterIP (&global_dns2, "DNS Address 2"); break;
-			case 4: enterIP (&global_snmask, "Subnet Mask"); break;
+			case 0: enterIP (&global_ipaddr, (char*)"DS IP"); break;
+			case 1: enterIP (&global_gateway, (char*)"Gateway Address"); break;
+			case 2: enterIP (&global_dns1, (char*)"DNS Address 1"); break;
+			case 3: enterIP (&global_dns2, (char*)"DNS Address 2"); break;
+			case 4: enterIP (&global_snmask, (char*)"Subnet Mask"); break;
 		}
 	}
 }
@@ -1273,8 +1295,12 @@ void startConnect(bool manual=false) {
 
 	mGUI->destroyWindow(waitWindow);
 	
-	if(enterIP(&destip, "Server IP"))
+	if (firstrun){
 		sendTouchUDP();
+	}else{	
+		if(enterIP(&destip, (char*)"Server IP"))
+			sendTouchUDP();
+	}
 
 	Wifi_DisconnectAP();
 	Wifi_DisableWifi();
@@ -1283,9 +1309,12 @@ void startConnect(bool manual=false) {
 //---------------------------------------------------------------------------------
 int main(void) {
 //---------------------------------------------------------------------------------
-	powerON(POWER_ALL_2D); 
+	//powerOn(POWER_ALL_2D); 
 	fatInitDefault();
-	irqInit();
+
+//devkitport
+
+//	irqInit();
 	
 	irqSet(IRQ_VBLANK, waitVbl);
 	irqEnable(IRQ_VBLANK);
@@ -1295,15 +1324,15 @@ int main(void) {
 	vramSetMainBanks(VRAM_A_MAIN_BG_0x06000000, VRAM_B_MAIN_BG_0x06020000, // VRAM_B_LCD
 			VRAM_C_SUB_BG , VRAM_D_LCD); 
 
-	SUB_BG0_CR = BG_COLOR_16 | BG_32x32 | BG_MAP_BASE(6) | BG_TILE_BASE(0);
-	SUB_BG1_CR = BG_COLOR_16 | BG_32x32 | BG_MAP_BASE(7) | BG_TILE_BASE(0);
-	SUB_BG3_CR = BG_BMP16_256x256;
+	REG_BG0CNT_SUB = BG_COLOR_16 | BG_32x32 | BG_MAP_BASE(6) | BG_TILE_BASE(0);
+	REG_BG1CNT_SUB = BG_COLOR_16 | BG_32x32 | BG_MAP_BASE(7) | BG_TILE_BASE(0);
+	REG_BG3CNT_SUB = BG_BMP16_256x256;
 
-	BG0_CR = BG_COLOR_16 | BG_32x32 | BG_MAP_BASE(6) | BG_TILE_BASE(0);
-	BG1_CR = BG_COLOR_16 | BG_32x32 | BG_MAP_BASE(7) | BG_TILE_BASE(0);
-	BG2_CR = BG_COLOR_16 | BG_32x32 | BG_MAP_BASE(5) | BG_TILE_BASE(1);
+	REG_BG0CNT = BG_COLOR_16 | BG_32x32 | BG_MAP_BASE(6) | BG_TILE_BASE(0);
+	REG_BG1CNT = BG_COLOR_16 | BG_32x32 | BG_MAP_BASE(7) | BG_TILE_BASE(0);
+	REG_BG2CNT = BG_COLOR_16 | BG_32x32 | BG_MAP_BASE(5) | BG_TILE_BASE(1);
 	//Screenshot
-	BG3_CR = BG_BMP16_256x256;
+	REG_BG3CNT = BG_BMP16_256x256;
 		
 //	BG_PALETTE_SUB[255] = RGB15(0,0,255);	//by default font will be rendered with color 255
 	
@@ -1314,20 +1343,20 @@ int main(void) {
 	//these are rotation backgrounds so you must set the rotation attributes:
 	//these are fixed point numbers with the low 8 bits the fractional part
 	//this basicaly gives it a 1:1 translation in x and y so you get a nice flat bitmap
-	BG3_XDX = 1 << 8;
-	BG3_XDY = 0;
-	BG3_YDX = 0;
-	BG3_YDY = 1 << 8;
+	REG_BG3PA = 1 << 8;
+	REG_BG3PB = 0;
+	REG_BG3PC = 0;
+	REG_BG3PD = 1 << 8;
 	//our bitmap looks a bit better if we center it so scroll down (256 - 192) / 2 
-	BG3_CX = 0;
-	BG3_CY = 64 << 8;
+	REG_BG3X = 0;
+	REG_BG3Y = 64 << 8;
 
-	SUB_BG3_XDX = 1 << 8;
-	SUB_BG3_XDY = 0;
-	SUB_BG3_YDX = 0;
-	SUB_BG3_YDY = 1 << 8;
-	SUB_BG3_CX = 0;
-	SUB_BG3_CY = 64 << 8;
+	REG_BG3PA_SUB = 1 << 8;
+	REG_BG3PB_SUB = 0;
+	REG_BG3PC_SUB = 0;
+	REG_BG3PD_SUB = 1 << 8;
+	REG_BG3X_SUB = 0;
+	REG_BG3Y_SUB = 64 << 8;
 	
 	lcdSwap();
 
@@ -1346,7 +1375,10 @@ int main(void) {
 	BG_PALETTE_SUB[0]=RGB(0,0,0);
 
 	//*****WIFI*****//
-	{ // send fifo message to initialize the arm7 wifi
+
+	Wifi_InitDefault(false);
+	
+/*	{ // send fifo message to initialize the arm7 wifi
 		REG_IPC_FIFO_CR = IPC_FIFO_ENABLE | IPC_FIFO_SEND_CLEAR; // enable & clear FIFO
 		
 		u32 Wifi_pass= Wifi_Init(WIFIINIT_OPTION_USELED);
@@ -1374,7 +1406,7 @@ int main(void) {
 		}
 		
 	} // wifi init complete - wifi lib can now be used!
-	//***********//
+*/	//***********//
 	
 	//Initialize the GUI for both screens, after this you only need to reference mGUI for the main screen and sGUI for the sub
 	//parameteters: ((0)where to load the tiles, (1)where to use the tile map, (2)where text is loaded, (3)true if using the sub screen)
@@ -1384,21 +1416,21 @@ int main(void) {
 	initKeyboard();
 //	showKeyboard(true);
 	
-	global_connectAP.ssid_len=16;
-	strcpy(global_connectAP.ssid,"SpeedTouch2DDA10");
+	global_connectAP.ssid_len=8;
+	strcpy(global_connectAP.ssid,"wireless");
 	global_connectAP.rssi=0;
 	global_connectAP.channel=1;
 	global_connectAP.flags=0;
 	global_wepkeyid=0;
 	global_wepmode=0;
 	global_dhcp=0;
-	global_ipaddr=0x3C01A8C0;
+	global_ipaddr=0x0201A8C0;
 	global_snmask=0x00FFFFFF;
 	global_gateway=0xFE01A8C0;
 	global_dns1=0xFE01A8C0;
 	global_dns2=0xFE01A8C0;
 	
-    FILE* fFile = fopen ("DS2Win.ini", "rb");
+    FILE* fFile = fopen ("data/DS2Win.ini", "rb");
 	char str[9];
 	if (fFile) {
 	  if (!feof(fFile)) {
@@ -1415,13 +1447,23 @@ int main(void) {
 	
 	int sel;
 	CWindow *mainWindow, *aboutWindow;
-	CSelector *autoConnSel, *manualConnSel, *aboutSel;
+	CSelector *autoConnSel, *manualConnSel, *autopadConnSel, *aboutSel;
 	while (1) {
+	
+#ifdef QUICK		
+		if (firstrun){
+			startConnect();			
+		}
+#else
+		firstrun = 0;
+#endif
+	
 		swiWaitForVBlank();
 		
 		mainWindow = mGUI->createWindow(&WND_MAINMENU);
 		autoConnSel = mainWindow->addSelector(&SEL_MAIN1);
 		manualConnSel = mainWindow->addSelector(&SEL_MAIN2);
+		autopadConnSel = mainWindow->addSelector(&SEL_MAIN4);
 		aboutSel = mainWindow->addSelector(&SEL_MAIN3);
 
 		autoConnSel->setState(SEL_SELECTED);
@@ -1442,6 +1484,8 @@ int main(void) {
 			sel = 2;
 		else if(aboutSel->getState()==SEL_ACTIVATED)
 			sel = 3;
+		else if(autopadConnSel->getState()==SEL_ACTIVATED)
+			sel = 4;
 
 		mGUI->destroyWindow(mainWindow);		//Don't forget to destroy the window if you use this GUI
 		
@@ -1457,10 +1501,15 @@ int main(void) {
 				aboutWindow->addLabel(&LBL_ABOUT1);
 				aboutWindow->addLabel(&LBL_ABOUT2);
 				aboutWindow->addLabel(&LBL_ABOUT3);
+				aboutWindow->addLabel(&LBL_ABOUT4);
 				
 				waitInput();
 
 				mGUI->destroyWindow(aboutWindow);
+			break;
+			case 4:
+				firstrun = 1;
+				startConnect();
 			break;
 		}
 

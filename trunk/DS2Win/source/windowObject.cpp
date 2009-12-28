@@ -24,7 +24,8 @@ void CWindowObject::draw() {
 
 bool CWindowObject::touchInside() {
 	u8 scrX1 = x1*8, scrY1 = y1*8, scrX2 = (x2+1)*8, scrY2 = (y2+1)*8;
-	touchPosition touchXY=touchReadXY();
+	touchPosition touchXY;
+	touchRead(&touchXY);
 	
 	lastX = touchXY.px;
 	lastY = touchXY.py;
