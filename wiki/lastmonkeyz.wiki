@@ -1,4 +1,4 @@
-#Last release by monkeyz notes
+#summary Last release by monkeyz notes
 
 = DS2Win Fusion v0.82 - June 12, 2008 =
 
